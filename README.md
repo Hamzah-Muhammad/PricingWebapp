@@ -6,12 +6,11 @@ The purpose of this web application is to visualize real-time stock prices
 
 (t+1) stock price is calculated using tthe GBM Formula 
 
-
-##
 ## How to Run the App
 
 To run the backend, navigate to PricingWebapp/stock-server in your terminal and run the following command: 
 node server.js 
+##
 
 To run the frontend, navigate to PricingWebapp and run the following command:
 npm start 
