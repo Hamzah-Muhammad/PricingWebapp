@@ -10,12 +10,13 @@ The purpose of this web application is to visualize real-time stock prices
 
 To run the backend, navigate to PricingWebapp/stock-server in your terminal and run the following command: 
 node server.js 
-##
 
 To run the frontend, navigate to PricingWebapp and run the following command:
 npm start 
 
 The webpage will pop up in your browser and the web app is ready to use!
+
+##
 
 # Getting Started with Create React App
 
