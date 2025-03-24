@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 import axios from "axios";
 import SearchBar from "./SearchBar";
 import StockChart from "./StockChart";
@@ -13,62 +14,83 @@ function App() {
 
   // Fetch stock data when the selected ticker changes
   useEffect(() => {
-    if (selectedTicker) {
-      fetchStockData();
-    }
-  }, [selectedTicker]);
+    let intervalId;
 
-  const fetchStockData = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
-      setStockData(response.data.prices);
-      setError(null);
-    } catch (err) {
-      setError("Failed to fetch stock data. Please check the backend server.");
-      console.error(err);
+    const fetchStockData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
+        console.log("Fetched new data:", response.data.prices); // Log the fetched data
+        setStockData(response.data.prices); // Replace old data with new data
+        setError(null);
+      } catch (err) {
+        setError("Failed to fetch stock data. Please check the backend server.");
+        console.error(err);
+      }
+    };
+
+    if (selectedTicker) {
+      fetchStockData(); // Fetch data immediately when ticker is selected
+      intervalId = setInterval(fetchStockData, 60000); // Fetch data every minute
     }
-  };
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId); // Clear when the ticket name is changed
+      }
+    };
+  }, [selectedTicker]);
 
   const handleParameterUpdate = async (newDrift, newVolatility) => {
     try {
+      // Log the updated parameters
+      console.log("Updating parameters:", {
+        drift: newDrift,
+        volatility: newVolatility,
+      });
+  
       // Send the updated parameters to the backend
       const response = await axios.post(`http://localhost:5001/api/stock/${selectedTicker}/parameters`, {
         drift: newDrift,
         volatility: newVolatility,
       });
-
-      // Append the new price to the chart
-      const newPrice = response.data.price;
-      const newTime = new Date().toLocaleTimeString(); // Use the current time for the new data point
-      setStockData((prevData) => [
-        ...prevData,
-        { time: newTime, price: newPrice },
-      ]);
-
-      // Update the local state with the new parameters
+  
+      // Log the backend response
+      console.log("Backend response:", response.data);
+  
+      // Update with the new parameters
       setDrift(newDrift);
       setVolatility(newVolatility);
+  
+      // Send a success message
+      console.log("Parameters updated successfully!");
     } catch (err) {
       setError("Failed to update parameters. Please check the backend server.");
-      console.error(err);
+      console.error("Error updating parameters:", err);
     }
   };
 
   return (
-    <div className="App">
-      <h1>Real-Time Stock Prices</h1>
-      <SearchBar onSelectTicker={setSelectedTicker} />
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="App" style={{ textAlign: "center" }}>
+      <div className="header-section">
+        <h1>Real-Time Stock Prices</h1>
+        <h5>A web app by Hamzah Muhammad</h5>
+        <h2>Select a Stock Ticker to get started</h2>
+        <SearchBar onSelectTicker={setSelectedTicker} />
+        {error && <p style={{ color: "red" }}>{error}</p>}
+      </div>
+
       {selectedTicker && (
         <>
-          <div style={{ width: "100%", height: "400px" }}>
+          <div className="stock-chart-container">
             <StockChart data={stockData} />
           </div>
-          <Parameters
-            drift={drift}
-            volatility={volatility}
-            onUpdate={handleParameterUpdate}
-          />
+          <div className="parameters-section">
+            <Parameters
+              drift={drift}
+              volatility={volatility}
+              onUpdate={handleParameterUpdate}
+            />
+          </div>
         </>
       )}
     </div>

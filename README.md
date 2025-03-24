@@ -1,3 +1,19 @@
+## Welcome to the Real Time Stock Pricing Web app
+
+This is a single page web application built with a Node.js backend and a React.js Frontend
+The purpose of this web application is to visualize real-time stock prices
+(t+1) stock price is calculated using tthe GBM Formula 
+
+## How to Run the App
+
+To run the backend, navigate to PricingWebapp/stock-server in your terminal and run the following command: 
+node server.js 
+
+To run the frontend, navigate to PricingWebapp and run the following command:
+npm start 
+
+The webpage will pop up in your browser and the web app is ready to use!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
