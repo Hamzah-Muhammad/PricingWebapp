@@ -74,7 +74,7 @@ function App() {
       <div className="header-section">
         <h1>Real-Time Stock Prices</h1>
         <h5>A web app by Hamzah Muhammad</h5>
-        <h5>(t+1) stock price calculated using the BGM Formula</h5>
+        <h5>(t+1) stock price calculated using the GBM Formula</h5>
         <h2>Select a Stock Ticker to get started</h2>
         <SearchBar onSelectTicker={setSelectedTicker} />
         {error && <p style={{ color: "red" }}>{error}</p>}
