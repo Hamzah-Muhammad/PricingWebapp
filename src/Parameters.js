@@ -30,7 +30,7 @@ function Parameters({ drift, volatility, onUpdate }) {
 
   return (
     <>
-      <div className="header-section2">
+      <div className="parameters-header-section">
         <h2>Edit the Stock Parameters below</h2>
       </div>
       

@@ -85,7 +85,7 @@ function App() {
           <div className="stock-chart-container">
             <StockChart data={stockData} />
           </div>
-          <div className="parameters-section">
+          <div className="parameters-section" style={{ textAlign: "center" }}>
             <Parameters
               drift={drift}
               volatility={volatility}
