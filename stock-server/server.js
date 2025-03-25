@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const hostname = "0.0.0.0";
+const hostname = "localhost";
 const port = process.env.port || 5001;
 const bodyParser = require("body-parser");
 

@@ -5,12 +5,14 @@ import SearchBar from "./SearchBar";
 import StockChart from "./StockChart";
 import Parameters from "./Parameters";
 
+
 function App() {
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [stockData, setStockData] = useState([]);
   const [drift, setDrift] = useState(0.0002);
   const [volatility, setVolatility] = useState(0.05);
   const [error, setError] = useState(null);
+  const hostname = "localhost";
 
   // Fetch stock data when the selected ticker changes
   useEffect(() => {
@@ -18,7 +20,7 @@ function App() {
 
     const fetchStockData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
+        const response = await axios.get(`http://${hostname}:5001/api/stock/${selectedTicker}`);
         console.log("Fetched new data:", response.data.prices); // Log the fetched data in the console
         setStockData(response.data.prices);                     // Replace old data with new data
         setError(null);
@@ -49,7 +51,7 @@ function App() {
       });
   
       // Send the updated parameters to the backend
-      const response = await axios.post(`http://localhost:5001/api/stock/${selectedTicker}/parameters`, {
+      const response = await axios.post(`http://${hostname}:5001/api/stock/${selectedTicker}/parameters`, {
         drift: newDrift,
         volatility: newVolatility,
       });

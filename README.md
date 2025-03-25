@@ -6,7 +6,17 @@ The purpose of this web application is to visualize real-time stock prices
 
 (t+1) stock price is calculated using the GBM Formula 
 
+
 ## How to Run the App
+
+Installation commands:
+
+npm install
+npm install axios chart.js react-chartjs-2
+
+cd stock-server 
+npm init -y
+npm install express cors body-parser
 
 To run the backend, navigate to PricingWebapp/stock-server in your terminal and run the following command: 
 node server.js 
