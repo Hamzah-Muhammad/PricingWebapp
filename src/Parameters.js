@@ -1,67 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Parameters({ drift, volatility, onUpdate }) {
+  
   const [newDrift, setNewDrift] = useState(drift);
   const [newVolatility, setNewVolatility] = useState(volatility);
+  const [showSuccess, setShowSuccess] = useState(false);
 
+  // Effect to sync local state with props when they change
+  useEffect(() => {
+    setNewDrift(drift);
+    setNewVolatility(volatility);
+  }, [drift, volatility]);
+
+  // Effect to automatically hide success message after 3 seconds
+  useEffect(() => {
+    let timer;
+    if (showSuccess) {
+      timer = setTimeout(() => setShowSuccess(false), 3000);
+    }
+    return () => clearTimeout(timer); 
+  }, [showSuccess]);
+
+  /**
+   * Handles form submission
+   * @param {Event} e - Form submit event
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     // Validate inputs
     if (isNaN(newDrift) || isNaN(newVolatility) || newVolatility < 0) {
       alert("Please enter valid values. Volatility must be non-negative.");
       return;
     }
     
-    // Call the onUpdate function with the new parameters
-    onUpdate(newDrift, newVolatility);
+    // Convert to numbers and call parent update function
+    onUpdate(Number(newDrift), Number(newVolatility));
+    setShowSuccess(true); // Show success notification
   };
 
   return (
-    <div style={{ display: "grid", placeItems: "center", height: "100%" }}>
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "10px", width: "300px" }}>
-        <label style={{ display: "grid", gap: "5px" }}>
-          Drift:
-          <input
-            type="number"
-            step="0.0001"
-            value={newDrift}
-            onChange={(e) => setNewDrift(parseFloat(e.target.value))}
-            style={{ padding: "5px", width: "100%" }}
-          />
-        </label>
-        <label style={{ display: "grid", gap: "5px" }}>
-          Volatility:
-          <input
-            type="number"
-            step="0.01"
-            value={newVolatility}
-            onChange={(e) => setNewVolatility(parseFloat(e.target.value))}
-            style={{ padding: "5px", width: "100%" }}
-          />
-        </label>
-        <button
-          type="submit"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
-            fontSize: "16px",
-            fontWeight: "bold",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#0056b3")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#007bff")}
-          onMouseDown={(e) => (e.target.style.backgroundColor = "#004080")}
-          onMouseUp={(e) => (e.target.style.backgroundColor = "#007bff")}
-        >
-          Update Parameters
-        </button>
-      </form>
-    </div>
+    <>
+      {/* Parameters Header Section */}
+      <div className="parameters-header-section">
+        <h2>Edit the Stock Parameters below</h2>
+      </div>
+      
+      {/* Main Parameters Container */}
+      <div className="parameters-container">
+        <div className="parameters-card">
+          <form onSubmit={handleSubmit} className="parameters-form">
+            {/* Drift Input Group */}
+            <div className="param-group">
+              <label className="param-label">Drift</label>
+              <input
+                type="number"
+                step="0.0001"  // Allows 4 decimal places
+                value={newDrift}
+                onChange={(e) => setNewDrift(e.target.value)}
+                className="param-input"
+              />
+            </div>
+            
+            {/* Volatility Input Group */}
+            <div className="param-group">
+              <label className="param-label">Volatility</label>
+              <input
+                type="number"
+                step="0.01"     // Allows 2 decimal places
+                min="0"         // Prevents negative values
+                value={newVolatility}
+                onChange={(e) => setNewVolatility(e.target.value)}
+                className="param-input"
+              />
+            </div>
+            
+            {/* Submit Button */}
+            <button type="submit" className="submit-btn">
+              Update Parameters
+            </button>
+          </form>
+        </div>
+
+        {/* Success Notification*/}
+        {showSuccess && (
+          <div className="success-notification">
+            <div className="success-message">
+              ✓ Parameters updated successfully!
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
