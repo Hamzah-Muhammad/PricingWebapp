@@ -98,7 +98,7 @@ app.get("/api/stock/:ticker", (req, res) => {
       });
     }
 
-    console.log(`New price generated for ${ticker}:`, stock.currentPrice); // Log the new price
+    console.log(`New price generated for ${ticker}:`, stock.currentPrice); // Log the new price in the console
     res.json({ prices: stock.history }); // Return the full history stock history
   }
 });
@@ -124,7 +124,7 @@ app.post("/api/stock/:ticker/parameters", (req, res) => {
   stocks[ticker].drift = drift;
   stocks[ticker].volatility = volatility;
 
-  // Return a success response
+  // Return a success response if parameters are updated successfully 
   res.json({ message: "Parameters updated successfully" });
 });
 

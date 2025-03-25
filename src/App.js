@@ -20,7 +20,7 @@ function App() {
       try {
         const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
         console.log("Fetched new data:", response.data.prices); // Log the fetched data
-        setStockData(response.data.prices); // Replace old data with new data
+        setStockData(response.data.prices);                     // Replace old data with new data
         setError(null);
       } catch (err) {
         setError("Failed to fetch stock data. Please check the backend server.");
@@ -29,13 +29,13 @@ function App() {
     };
 
     if (selectedTicker) {
-      fetchStockData(); // Fetch data immediately when ticker is selected
-      intervalId = setInterval(fetchStockData, 60000); // Fetch data every minute
+      fetchStockData();                                        // Fetch data immediately when ticker is selected
+      intervalId = setInterval(fetchStockData, 60000);         // Fetch data every minute
     }
 
     return () => {
       if (intervalId) {
-        clearInterval(intervalId); // Clear when the ticket name is changed
+        clearInterval(intervalId);                             // Clear when the ticker name is changed
       }
     };
   }, [selectedTicker]);

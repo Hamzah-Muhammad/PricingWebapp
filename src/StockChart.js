@@ -7,7 +7,7 @@ Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 function StockChart({ data, ticker }) {
   const chartRef = useRef(null);
 
-  // Time formatting
+  // Time formatting Function
   const formatTimeWithAMPM = (timeString) => {
     if (!timeString) return '';
     
@@ -29,7 +29,6 @@ function StockChart({ data, ticker }) {
       ampm = hourNum >= 12 && hourNum < 24 ? 'PM' : 'AM';
     }
     
-    // Convert to 12-hour format
     hourNum = hourNum % 12 || 12; // Convert 0 or 24 to 12
     
     return `${hourNum}:${minutes} ${ampm}`;
@@ -64,7 +63,7 @@ function StockChart({ data, ticker }) {
         displayColors: false,
         callbacks: {
           title: (context) => formatTimeWithAMPM(context[0].label),
-          label: (context) => `$${context.parsed.y.toFixed(2)}`
+          label: (context) => `$${context.parsed.y.toFixed(2)}`     //Fixed to 2 decimal places
         }
       },
       legend: {
@@ -76,7 +75,7 @@ function StockChart({ data, ticker }) {
         type: 'category',
         title: {
           display: true,
-          text: 'Time in EST', // X axis label
+          text: 'Time (EST)', // X axis label
           color: '#666',
           font: {
             size: 14,
@@ -91,8 +90,8 @@ function StockChart({ data, ticker }) {
             const formattedTime = formatTimeWithAMPM(time);
             const minutes = time.includes(':') ? time.split(':')[1].split(' ')[0] : '00';
             return parseInt(minutes) % 15 === 0 ? formattedTime : undefined; // Only show every 15 minutes on the X axis 
-          },
-          autoSkip: false,
+          },                                                                 // Not neccessary but 1 minute charts usually 
+          autoSkip: false,                                                   // display 15m intervals on the x-axis 
           maxRotation: 0,
           minRotation: 0,
           color: '#666',

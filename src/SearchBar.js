@@ -19,7 +19,7 @@ function SearchBar({ onSelectTicker }) {
     };
 
     fetchTickers();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []); // Ensures this runs only once on mount
 
   return (
     <div>

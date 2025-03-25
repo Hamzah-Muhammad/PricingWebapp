@@ -9,19 +9,19 @@
 .header-section h1 {
   margin-bottom: 8px;
   line-height: 1.1;
-  animation: dropIn 0.4s 0.8s ease-out both;
+  animation: dropIn 0.4s 1s ease-out both;
 }
 
 .header-section h5 {
   margin: 4px 0;
   line-height: 1.1;
-  animation: dropIn 0.4s 1.6s ease-out both;
+  animation: dropIn 0.4s 2s ease-out both;
 }
 
 .header-section h2 {
   margin: 12px ;
   line-height: 1.1;
-  animation: dropIn 0.4s 2.4s ease-out both;
+  animation: dropIn 0.4s 3s ease-out both;
 }
 
 .parameters-header-section {
