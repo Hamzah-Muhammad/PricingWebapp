@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const hostname = "0.0.0.0";
+const port = process.env.port || 5001;
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -129,6 +131,6 @@ app.post("/api/stock/:ticker/parameters", (req, res) => {
 });
 
 // Start the server
-app.listen(5001, () => {
-  console.log("Server running on http://localhost:5001");
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
