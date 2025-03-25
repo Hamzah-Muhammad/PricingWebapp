@@ -1,6 +1,6 @@
 /* Header Section */
 .header-section {
-  background: linear-gradient(135deg, #007bff, #004080);
+  background: linear-gradient(135deg, #007bff, #004080); /* Apply a stylistic gradient to the background*/
   color: white;
   padding: 20px;
   border-bottom: 4px solid #0056b3;
@@ -9,7 +9,7 @@
 .header-section h1 {
   margin-bottom: 8px;
   line-height: 1.1;
-  animation: dropIn 0.4s 1s ease-out both;
+  animation: dropIn 0.4s 1s ease-out both;  /* timed drop in animations*/
 }
 
 .header-section h5 {
@@ -25,13 +25,13 @@
 }
 
 .parameters-header-section {
-  background: linear-gradient(135deg, #007bff, #004080);
+  background: linear-gradient(135deg, #007bff, #004080);  /* Apply a stylistic gradient to the background*/
   color: white;
   padding: 5px;
   border-bottom: 4px solid #0056b3;
 }
 
-/* Parameters Container */
+/* Parameters Section */
 .parameters-container {
   display: flex;
   justify-content: center;
@@ -149,6 +149,23 @@
   }
 }
 
+/* StockChart Section */
+.stock-chart-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.stock-chart-wrapper {
+  width: 94%; /* Adjust to control the chart width */
+  max-width: 1200px; 
+  height: 500px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .parameters-card {
@@ -170,21 +187,4 @@
   .success-message {
     width: calc(100% - 20px);
   }
-}
-
-/* StockChart container */
-.stock-chart-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 20px 0;
-}
-
-.stock-chart-wrapper {
-  width: 94%; /* Adjust to control the chart width */
-  max-width: 1200px; 
-  height: 500px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin: 0 auto;
 }

@@ -19,7 +19,7 @@ function App() {
     const fetchStockData = async () => {
       try {
         const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
-        console.log("Fetched new data:", response.data.prices); // Log the fetched data
+        console.log("Fetched new data:", response.data.prices); // Log the fetched data in the console
         setStockData(response.data.prices);                     // Replace old data with new data
         setError(null);
       } catch (err) {
@@ -54,14 +54,14 @@ function App() {
         volatility: newVolatility,
       });
   
-      // Log the backend response
+      // Log the backend response in the console
       console.log("Backend response:", response.data);
   
       // Update with the new parameters
       setDrift(newDrift);
       setVolatility(newVolatility);
   
-      // Send a success message
+      // Send a success message 
       console.log("Parameters updated successfully!");
     } catch (err) {
       setError("Failed to update parameters. Please check the backend server.");

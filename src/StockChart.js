@@ -7,7 +7,7 @@ Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 function StockChart({ data, ticker }) {
   const chartRef = useRef(null);
 
-  // Time formatting Function
+  // Time formatting Function 
   const formatTimeWithAMPM = (timeString) => {
     if (!timeString) return '';
     
@@ -130,7 +130,7 @@ function StockChart({ data, ticker }) {
   useEffect(() => {
     const chartInstance = chartRef.current;
     return () => {
-      if (chartInstance) chartInstance.destroy();
+      if (chartInstance) chartInstance.destroy();  // Destroy chart to generate a new one 
     };
   }, [ticker]);
 
