@@ -7,7 +7,7 @@ Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 function StockChart({ data, ticker }) {
   const chartRef = useRef(null);
 
-  // Reliable time formatting function
+  // Time formatting
   const formatTimeWithAMPM = (timeString) => {
     if (!timeString) return '';
     
@@ -76,7 +76,7 @@ function StockChart({ data, ticker }) {
         type: 'category',
         title: {
           display: true,
-          text: 'Time in EST',
+          text: 'Time in EST', // X axis label
           color: '#666',
           font: {
             size: 14,
@@ -90,14 +90,14 @@ function StockChart({ data, ticker }) {
             if (!time) return undefined;
             const formattedTime = formatTimeWithAMPM(time);
             const minutes = time.includes(':') ? time.split(':')[1].split(' ')[0] : '00';
-            return parseInt(minutes) % 15 === 0 ? formattedTime : undefined;
+            return parseInt(minutes) % 15 === 0 ? formattedTime : undefined; // Only show every 15 minutes on the X axis 
           },
           autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
           color: '#666',
           font: {
-            size: 10,
+            size: 8,
           }
         },
         grid: {
@@ -107,7 +107,7 @@ function StockChart({ data, ticker }) {
       y: {
         title: {
           display: true,
-          text: 'Price (USD)',
+          text: 'Price (USD)', // Y axis label
           color: '#666',
           font: {
             size: 14,
@@ -136,13 +136,15 @@ function StockChart({ data, ticker }) {
   }, [ticker]);
 
   return (
-    <div style={{ width: "100%", height: "400px", border: "1px solid #ddd", borderRadius: "8px" }}>
-      <Line 
-        ref={chartRef}
-        data={chartData}
-        options={options}
-        key={ticker}
-      />
+    <div className="stock-chart-container">
+      <div className="stock-chart-wrapper">
+        <Line 
+          ref={chartRef}
+          data={chartData}
+          options={options}
+          key={ticker}
+        />
+      </div>
     </div>
   );
 }

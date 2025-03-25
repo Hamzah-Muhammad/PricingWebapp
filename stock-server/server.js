@@ -27,8 +27,8 @@ try {
       }
     }
   }
-
-  console.log('Stocks data loaded and updated:', stocks); 
+  // Console log of Initial Data
+  console.log('Stocks data loaded and updated:', stocks);   
 } catch (err) {
   console.error('Error reading or parsing InitialData.json:', err);
 }
