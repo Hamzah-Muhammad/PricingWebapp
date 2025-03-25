@@ -18,10 +18,10 @@ try {
   // Add a currentPrice array 
   for (const ticker in stocks) {
     if (stocks[ticker]) {
-      // Set currentPrice equal to open
+      // Set currentPrice equal to open stock price
       stocks[ticker].currentPrice = stocks[ticker].open;
 
-      // Add a history array 
+      // Add a history array (history of the previous stock prices)
       if (!stocks[ticker].history) {
         stocks[ticker].history = [];
       }
@@ -36,7 +36,7 @@ try {
 // Function to calculate the next price using GBM
 const getNextPrice = (currentPrice, drift, volatility, dt) => {
   const random = Math.random() * 2 - 1; // Random value between -1 and 1
-  return currentPrice * Math.exp((drift - 0.5 * volatility ** 2) * dt + volatility * Math.sqrt(dt) * random);
+  return currentPrice * Math.exp((drift - 0.5 * volatility ** 2) * dt + volatility * Math.sqrt(dt) * random); // GBM Formula 
 };
 
 // Function to generate prices for a given day
@@ -44,7 +44,7 @@ const generatePricesForDay = (stock, startTime, endTime) => {
   const prices = [];
   let currentPrice = stock.open;
   for (let time = startTime; time <= endTime; time.setMinutes(time.getMinutes() + 1)) {
-    const dt = 1; // Time step is 1 minute
+    const dt = 1; // Time step is 1 minute (Adjust as desired)
     currentPrice = getNextPrice(currentPrice, stock.drift, stock.volatility, dt); // Calculate the next price
     prices.push({
       time: time.toLocaleTimeString(),
