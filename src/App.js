@@ -13,6 +13,7 @@ function App() {
   const [volatility, setVolatility] = useState(0.05);
   const [error, setError] = useState(null);
   const hostname = "localhost";
+  const port = process.env.port || 5001;
 
   // Fetch stock data when the selected ticker changes
   useEffect(() => {
@@ -20,7 +21,7 @@ function App() {
 
     const fetchStockData = async () => {
       try {
-        const response = await axios.get(`http://${hostname}:5001/api/stock/${selectedTicker}`);
+        const response = await axios.get(`http://${hostname}:${port}/api/stock/${selectedTicker}`);
         console.log("Fetched new data:", response.data.prices); // Log the fetched data in the console
         setStockData(response.data.prices);                     // Replace old data with new data
         setError(null);
