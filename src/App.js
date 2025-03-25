@@ -20,7 +20,7 @@ function App() {
       try {
         const response = await axios.get(`http://localhost:5001/api/stock/${selectedTicker}`);
         console.log("Fetched new data:", response.data.prices); // Log the fetched data
-        setStockData(response.data.prices); // Replace old data with new data
+        setStockData(response.data.prices);                     // Replace old data with new data
         setError(null);
       } catch (err) {
         setError("Failed to fetch stock data. Please check the backend server.");
@@ -29,13 +29,13 @@ function App() {
     };
 
     if (selectedTicker) {
-      fetchStockData(); // Fetch data immediately when ticker is selected
-      intervalId = setInterval(fetchStockData, 60000); // Fetch data every minute
+      fetchStockData();                                        // Fetch data immediately when ticker is selected
+      intervalId = setInterval(fetchStockData, 60000);         // Fetch data every minute
     }
 
     return () => {
       if (intervalId) {
-        clearInterval(intervalId); // Clear when the ticket name is changed
+        clearInterval(intervalId);                             // Clear when the ticker name is changed
       }
     };
   }, [selectedTicker]);
@@ -74,6 +74,7 @@ function App() {
       <div className="header-section">
         <h1>Real-Time Stock Prices</h1>
         <h5>A web app by Hamzah Muhammad</h5>
+        <h5>(t+1) stock price calculated using the BGM Formula</h5>
         <h2>Select a Stock Ticker to get started</h2>
         <SearchBar onSelectTicker={setSelectedTicker} />
         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -84,7 +85,7 @@ function App() {
           <div className="stock-chart-container">
             <StockChart data={stockData} />
           </div>
-          <div className="parameters-section">
+          <div className="parameters-section" style={{ textAlign: "center" }}>
             <Parameters
               drift={drift}
               volatility={volatility}
