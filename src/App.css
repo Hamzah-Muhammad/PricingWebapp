@@ -1,4 +1,13 @@
 /* Header Section */
+
+.App {
+  min-height: 100vh;
+}
+
+.App.gradient-bg {
+  background: linear-gradient(135deg, #bfdbf9, #9bc6f1); /* Apply a stylistic gradient to the background*/
+}
+
 .header-section {
   background: linear-gradient(135deg, #007bff, #004080); /* Apply a stylistic gradient to the background*/
   color: white;

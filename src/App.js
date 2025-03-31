@@ -9,8 +9,8 @@ import Parameters from "./Parameters";
 function App() {
   const [selectedTicker, setSelectedTicker] = useState(null);
   const [stockData, setStockData] = useState([]);
-  const [drift, setDrift] = useState(0.0002);
-  const [volatility, setVolatility] = useState(0.05);
+  const [drift, setDrift] = useState(null);
+  const [volatility, setVolatility] = useState(null);
   const [error, setError] = useState(null);
   const hostname = "localhost";
   const port = process.env.port || 5001;
@@ -19,11 +19,20 @@ function App() {
   useEffect(() => {
     let intervalId;
 
-    const fetchStockData = async () => {
+    const fetchInitialData = async () => {
       try {
-        const response = await axios.get(`http://${hostname}:${port}/api/stock/${selectedTicker}`);
-        console.log("Fetched new data:", response.data.prices); // Log the fetched data in the console
-        setStockData(response.data.prices);                     // Replace old data with new data
+        // First get the initial parameters
+        const paramsResponse = await axios.get(
+          `http://${hostname}:${port}/api/stock/${selectedTicker}/initial-parameters`
+        );
+        setDrift(paramsResponse.data.drift);
+        setVolatility(paramsResponse.data.volatility);
+
+        // Then get the stock data
+        const stockResponse = await axios.get(
+          `http://${hostname}:${port}/api/stock/${selectedTicker}`
+        );
+        setStockData(stockResponse.data.prices);
         setError(null);
       } catch (err) {
         setError("Failed to fetch stock data. Please check the backend server.");
@@ -32,13 +41,13 @@ function App() {
     };
 
     if (selectedTicker) {
-      fetchStockData();                                        // Fetch data immediately when ticker is selected
-      intervalId = setInterval(fetchStockData, 60000);         // Fetch data every minute
+      fetchInitialData();
+      intervalId = setInterval(fetchInitialData, 60000);
     }
 
     return () => {
       if (intervalId) {
-        clearInterval(intervalId);                             // Clear when the ticker name is changed
+        clearInterval(intervalId);
       }
     };
   }, [selectedTicker]);
@@ -72,8 +81,9 @@ function App() {
     }
   };
 
-  return (
-    <div className="App" style={{ textAlign: "center" }}>
+  return ( 
+    // If ticker is not selected, load the header section and the full page background
+    <div className={`App ${!selectedTicker ? 'gradient-bg' : ''}`} style={{ textAlign: "center", minHeight: '100vh' }}>
       <div className="header-section">
         <h1>Real-Time Stock Prices</h1>
         <h5>A web app by Hamzah Muhammad</h5>
@@ -82,8 +92,10 @@ function App() {
         <SearchBar onSelectTicker={setSelectedTicker} />
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
+    
 
-      {selectedTicker && (
+      {selectedTicker && ( 
+        // When a ticker is selected, load the StockChart and Parameters sections
         <>
           <div className="stock-chart-container">
             <StockChart data={stockData} />
