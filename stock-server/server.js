@@ -112,6 +112,18 @@ app.get("/api/tickers", (req, res) => {
   res.json(tickers); // Send the tickers array as a JSON response 
 });
 
+// GET API to return the original parameters
+app.get("/api/stock/:ticker/initial-parameters", (req, res) => {
+  const ticker = req.params.ticker;
+  const stock = stocks[ticker];
+  if (!stock) return res.status(404).send("Stock not found");
+  
+  res.json({
+    drift: stock.drift,
+    volatility: stock.volatility
+  });
+});
+
 // POST API to update parameters
 app.post("/api/stock/:ticker/parameters", (req, res) => {
   const ticker = req.params.ticker;
