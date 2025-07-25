@@ -11,22 +11,22 @@ The purpose of this web application is to visualize real-time stock prices
 
 Installation commands:
 
+cd client
 npm install
 npm install axios chart.js react-chartjs-2
 
-cd stock-server 
-npm init -y
-npm install express cors body-parser
+cd ../server
+npm install
 
-To run the backend, navigate to PricingWebapp/stock-server in your terminal and run the following command: 
-node server.js 
+To run the backend, navigate to PricingWebapp/server in your terminal and run the following command:
+node server.js
 
-To run the frontend, navigate to PricingWebapp and run the following command:
-npm start 
+To run the frontend, navigate to PricingWebapp/client and run the following command:
+npm start
 
 The webpage will pop up in your browser and the web app is ready to use!
 
-If you want to add new data or edit data, navigate to /stock-server/InitialData.json
+If you want to add new data or edit data, navigate to /server/InitialData.json
 
 ##
 
