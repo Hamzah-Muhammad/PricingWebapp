@@ -97,7 +97,7 @@ function App() {
         // When a ticker is selected, load the StockChart and Parameters sections
         <>
           <div className="stock-chart-container">
-            <StockChart data={stockData} />
+            <StockChart data={stockData} ticker={selectedTicker} />
           </div>
           <div className="parameters-section" style={{ textAlign: "center" }}>
             <Parameters
