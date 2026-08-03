@@ -80,34 +80,43 @@ function App() {
     }
   };
 
-  return ( 
-    // If ticker is not selected, load the header section and the full page background
-    <div className={`App ${!selectedTicker ? 'gradient-bg' : ''}`} style={{ textAlign: "center", minHeight: '100vh' }}>
-      <div className="header-section">
-        <h1>Real-Time Stock Prices</h1>
-        <h5>A web app by Hamzah Muhammad</h5>
-        <h5>(t+1) stock price calculated using the GBM Formula</h5>
-        <h2>Select a Stock Ticker to get started</h2>
-        <SearchBar onSelectTicker={setSelectedTicker} />
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </div>
-    
+  return (
+    <div className="App">
+      <header className="app-header">
+        <div className="app-brand">
+          <h1>Real-Time Stock Prices</h1>
+          <p className="app-tagline">GBM simulator by Hamzah Muhammad</p>
+        </div>
+        <span className="app-demo-badge">Demo · Simulated Data</span>
+      </header>
 
-      {selectedTicker && ( 
-        // When a ticker is selected, load the StockChart and Parameters sections
-        <>
-          <div className="stock-chart-container">
-            <StockChart data={stockData} ticker={selectedTicker} />
-          </div>
-          <div className="parameters-section" style={{ textAlign: "center" }}>
-            <Parameters
-              drift={drift}
-              volatility={volatility}
-              onUpdate={handleParameterUpdate}
-            />
-          </div>
-        </>
-      )}
+      <main className="app-body">
+        <div className="hero-copy">
+          <h2>Select a ticker to get started</h2>
+          <p>Prices are simulated tick-by-tick using Geometric Brownian Motion — tune the drift and volatility below to see how the path changes.</p>
+        </div>
+
+        <div className="ticker-search">
+          <SearchBar onSelectTicker={setSelectedTicker} />
+        </div>
+
+        {error && <div className="error-banner">{error}</div>}
+
+        {selectedTicker && (
+          <>
+            <div className="stock-chart-container">
+              <StockChart data={stockData} ticker={selectedTicker} />
+            </div>
+            <div className="parameters-section">
+              <Parameters
+                drift={drift}
+                volatility={volatility}
+                onUpdate={handleParameterUpdate}
+              />
+            </div>
+          </>
+        )}
+      </main>
     </div>
   );
 }
