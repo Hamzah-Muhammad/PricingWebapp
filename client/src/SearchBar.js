@@ -20,16 +20,16 @@ function SearchBar({ onSelectTicker }) {
   }, []); // Ensures this runs only once on mount
 
   return (
-    <div>
-      <select onChange={(e) => onSelectTicker(e.target.value)}>
-        <option value="">Select a ticker</option>
-        {tickers.map((ticker) => (
-          <option key={ticker} value={ticker}>
-            {ticker}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select className="ticker-select" onChange={(e) => onSelectTicker(e.target.value)} defaultValue="">
+      <option value="" disabled>
+        Select a ticker
+      </option>
+      {tickers.map((ticker) => (
+        <option key={ticker} value={ticker}>
+          {ticker}
+        </option>
+      ))}
+    </select>
   );
 }
 

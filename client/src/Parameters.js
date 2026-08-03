@@ -40,58 +40,49 @@ function Parameters({ drift, volatility, onUpdate }) {
   };
 
   return (
-    <>
-      {/* Parameters Header Section */}
-      <div className="parameters-header-section">
-        <h2>Edit the Stock Parameters below</h2>
-      </div>
-      
-      {/* Main Parameters Container */}
-      <div className="parameters-container">
-        <div className="parameters-card">
-          <form onSubmit={handleSubmit} className="parameters-form">
-            {/* Drift Input Group */}
-            <div className="param-group">
-              <label className="param-label">Drift</label>
-              <input
-                type="number"
-                step="0.0001"  // Allows 4 decimal places
-                value={newDrift}
-                onChange={(e) => setNewDrift(e.target.value)}
-                className="param-input"
-              />
-            </div>
-            
-            {/* Volatility Input Group */}
-            <div className="param-group">
-              <label className="param-label">Volatility</label>
-              <input
-                type="number"
-                step="0.01"     // Allows 2 decimal places
-                min="0"         // Prevents negative values
-                value={newVolatility}
-                onChange={(e) => setNewVolatility(e.target.value)}
-                className="param-input"
-              />
-            </div>
-            
-            {/* Submit Button */}
-            <button type="submit" className="submit-btn">
-              Update Parameters
-            </button>
-          </form>
+    <div className="parameters-card">
+      <h3>Simulation Parameters</h3>
+      <form onSubmit={handleSubmit} className="parameters-form">
+        {/* Drift Input Group */}
+        <div className="param-group">
+          <label className="param-label">Drift</label>
+          <input
+            type="number"
+            step="0.0001"  // Allows 4 decimal places
+            value={newDrift ?? ""}
+            onChange={(e) => setNewDrift(e.target.value)}
+            className="param-input"
+          />
         </div>
 
-        {/* Success Notification*/}
-        {showSuccess && (
-          <div className="success-notification">
-            <div className="success-message">
-              ✓ Parameters updated successfully!
-            </div>
+        {/* Volatility Input Group */}
+        <div className="param-group">
+          <label className="param-label">Volatility</label>
+          <input
+            type="number"
+            step="0.01"     // Allows 2 decimal places
+            min="0"         // Prevents negative values
+            value={newVolatility ?? ""}
+            onChange={(e) => setNewVolatility(e.target.value)}
+            className="param-input"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button type="submit" className="submit-btn">
+          Update Parameters
+        </button>
+      </form>
+
+      {/* Success Notification */}
+      {showSuccess && (
+        <div className="success-notification">
+          <div className="success-message">
+            ✓ Parameters updated successfully!
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 }
 
