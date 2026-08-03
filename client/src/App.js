@@ -4,6 +4,7 @@ import axios from "axios";
 import SearchBar from "./SearchBar";
 import StockChart from "./StockChart";
 import Parameters from "./Parameters";
+import { API_BASE_URL } from "./config";
 
 
 function App() {
@@ -12,8 +13,6 @@ function App() {
   const [drift, setDrift] = useState(null);
   const [volatility, setVolatility] = useState(null);
   const [error, setError] = useState(null);
-  const hostname = "localhost";
-  const port = process.env.port || 5001;
 
   // Fetch stock data when the selected ticker changes
   useEffect(() => {
@@ -23,14 +22,14 @@ function App() {
       try {
         // First get the initial parameters
         const paramsResponse = await axios.get(
-          `http://${hostname}:${port}/api/stock/${selectedTicker}/initial-parameters`
+          `${API_BASE_URL}/api/stock/${selectedTicker}/initial-parameters`
         );
         setDrift(paramsResponse.data.drift);
         setVolatility(paramsResponse.data.volatility);
 
         // Then get the stock data
         const stockResponse = await axios.get(
-          `http://${hostname}:${port}/api/stock/${selectedTicker}`
+          `${API_BASE_URL}/api/stock/${selectedTicker}`
         );
         setStockData(stockResponse.data.prices);
         setError(null);
@@ -61,7 +60,7 @@ function App() {
       });
   
       // Send the updated parameters to the backend
-      const response = await axios.post(`http://${hostname}:5001/api/stock/${selectedTicker}/parameters`, {
+      const response = await axios.post(`${API_BASE_URL}/api/stock/${selectedTicker}/parameters`, {
         drift: newDrift,
         volatility: newVolatility,
       });
